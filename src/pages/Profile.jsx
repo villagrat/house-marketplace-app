@@ -15,9 +15,9 @@ function Profile() {
 
   const { name, email } = formData;
 
-  const navigate = useNavigate;
+  const navigate = useNavigate();
 
-  const onLogOut = () => {
+  const onLogout = () => {
     auth.signOut();
     navigate('/');
   };
@@ -51,7 +51,7 @@ function Profile() {
     <div className='profile'>
       <header className='profileHeader'>
         <p className='pageHeader'>My Profile</p>
-        <button type='button' onClick={onLogOut} className='logOut'>
+        <button type='button' onClick={onLogout} className='logOut'>
           LogOut
         </button>
       </header>

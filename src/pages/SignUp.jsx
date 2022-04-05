@@ -10,6 +10,7 @@ import { doc, setDoc, serverTimestamp } from 'firebase/firestore';
 import { toast } from 'react-toastify';
 import { ReactComponent as ArrowRightIcon } from '../assets/svg/keyboardArrowRightIcon.svg';
 import visibilityIcon from '../assets/svg/visibilityIcon.svg';
+import OAuth from '../components/OAuth';
 
 function SignUp() {
   const [showPassword, setShowPassword] = useState(false);
@@ -101,8 +102,6 @@ function SignUp() {
               src={visibilityIcon}
               alt='show password'
               className='showPassword'
-              // alternatively onClick={() => setShowPassword(!showPassword)}
-              // negates whatever curr value of show password is
               onClick={() => setShowPassword((prevState) => !prevState)}
             />
           </div>
@@ -119,7 +118,7 @@ function SignUp() {
           </div>
         </form>
 
-        {/* Google OAuth Component */}
+        <OAuth />
 
         <Link to='/sign-in' className='registerLink'>
           Sign In Instead

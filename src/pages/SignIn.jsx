@@ -4,6 +4,7 @@ import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 import { toast } from 'react-toastify';
 import { ReactComponent as ArrowRightIcon } from '../assets/svg/keyboardArrowRightIcon.svg';
 import visibilityIcon from '../assets/svg/visibilityIcon.svg';
+import OAuth from '../components/OAuth';
 
 function SignIn() {
   const [showPassword, setShowPassword] = useState(false);
@@ -72,8 +73,6 @@ function SignIn() {
               src={visibilityIcon}
               alt='show password'
               className='showPassword'
-              // alternatively onClick={() => setShowPassword(!showPassword)}
-              // negates whatever curr value of show password is
               onClick={() => setShowPassword((prevState) => !prevState)}
             />
           </div>
@@ -90,7 +89,7 @@ function SignIn() {
           </div>
         </form>
 
-        {/* Google OAuth Component */}
+        <OAuth />
 
         <Link to='/sign-up' className='registerLink'>
           Sign Up Instead
