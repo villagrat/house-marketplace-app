@@ -385,6 +385,11 @@ button {
   border-radius: 1.5rem;
   object-fit: cover;
   margin: 0 auto;
+  transition: transform 0.4s;
+}
+
+.exploreCategoryImg:hover {
+  transform: scale(1.03);
 }
 
 .exploreCategoryName {

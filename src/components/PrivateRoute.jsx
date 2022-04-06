@@ -5,7 +5,6 @@ import Spinner from './Spinner';
 const PrivateRoute = () => {
   const { loggedIn, checkingAuthStatus } = useAuthStatus();
 
-  // todo: show a spinner
   if (checkingAuthStatus) {
     return <Spinner />;
   }
