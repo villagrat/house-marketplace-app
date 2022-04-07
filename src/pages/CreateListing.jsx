@@ -55,6 +55,7 @@ function CreateListing() {
 
   const onMutate = (e) => {
     // check for Boolean value on event
+    // Hardcoded strings on type need to be converted
     let boolean = null;
 
     if (e.target.value === 'true') {
@@ -73,8 +74,7 @@ function CreateListing() {
     }
 
     // Text/Booleans/Numbers
-    // ?? op -> if 'boolean' is null use first clause
-    //          else use second clause
+    // ?? op -> if 'boolean' is null use fallback value
     if (!e.target.files) {
       setFormData((prevState) => ({
         ...prevState,
@@ -87,12 +87,12 @@ function CreateListing() {
     e.preventDefault();
     setLoading(true);
 
+    // Validation
     if (discountedPrice >= regularPrice) {
       setLoading(false);
       toast.error('Discounted price needs to be less than regular price');
       return;
     }
-
     if (images.length > 6) {
       setLoading(false);
       toast.error('Upload no more than 6 images');
@@ -182,9 +182,9 @@ function CreateListing() {
     };
 
     // cleanup on fields before attempting to save doc
+    formDataCopy.location = address;
     delete formDataCopy.images;
     delete formDataCopy.address;
-    formDataCopy.location = address;
     !formDataCopy.offer && delete formDataCopy.discountedPrice;
 
     const docRef = await addDoc(collection(db, 'listings'), formDataCopy);
@@ -406,7 +406,7 @@ function CreateListing() {
               id='regularPrice'
               value={regularPrice}
               onChange={onMutate}
-              min='50'
+              min='100'
               max='750000000'
               required
             />
@@ -423,7 +423,7 @@ function CreateListing() {
                   id='discountedPrice'
                   value={discountedPrice}
                   onChange={onMutate}
-                  min='50'
+                  min='60'
                   max='750000000'
                   required={offer}
                 />
