@@ -1,10 +1,19 @@
 import { useState, useEffect } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
+import { MapContainer, Marker, Popup, TileLayer } from 'react-leaflet';
 import { doc, getDoc } from 'firebase/firestore';
 import { getAuth } from 'firebase/auth';
 import { db } from '../firebase.config';
 import Spinner from '../components/Spinner';
 import shareIcon from '../assets/svg/shareIcon.svg';
+import { Navigation, Pagination, Scrollbar, A11y } from 'swiper';
+import { Swiper, SwiperSlide } from 'swiper/react';
+
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
+import 'swiper/css/scrollbar';
+import 'swiper/css/a11y';
 
 // https://stackoverflow.com/questions/67552020/how-to-fix-error-failed-to-compile-node-modules-react-leaflet-core-esm-pat
 function Listing() {
@@ -22,6 +31,7 @@ function Listing() {
       const docRef = doc(db, 'listings', params.listingId);
       const docSnap = await getDoc(docRef);
 
+      // todo: handle case of bad route, so it doesnt load forever
       if (docSnap.exists()) {
         setListing(docSnap.data());
         setLoading(false);
@@ -37,7 +47,27 @@ function Listing() {
 
   return (
     <main>
-      {/* Slider Component will go here */}
+      <Swiper
+        modules={[Navigation, Pagination, Scrollbar, A11y]}
+        slidesPerView={1}
+        pagination={{ clickable: true }}
+        navigation
+        style={{ height: '300px' }}
+      >
+        {listing.imageUrls.map((url, index) => {
+          return (
+            <SwiperSlide key={index}>
+              <div
+                className='swiperSlideDiv'
+                style={{
+                  background: `url(${listing.imageUrls[index]}) center no-repeat`,
+                  backgroundSize: 'cover',
+                }}
+              ></div>
+            </SwiperSlide>
+          );
+        })}
+      </Swiper>
 
       <div
         className='shareIconDiv'
@@ -91,7 +121,25 @@ function Listing() {
 
         <p className='listingLocationTitle'>Location</p>
 
-        {/* Map component here */}
+        <div className='leafletContainer'>
+          <MapContainer
+            style={{ height: '100%', width: '100%' }}
+            center={[listing.geolocation.lat, listing.geolocation.lng]}
+            zoom={13}
+            scrollWheelZoom={false}
+          >
+            <TileLayer
+              attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+              url='https://{s}.tile.openstreetmap.de/tiles/osmde/{z}/{x}/{y}.png'
+            />
+
+            <Marker
+              position={[listing.geolocation.lat, listing.geolocation.lng]}
+            >
+              <Popup>{listing.location}</Popup>
+            </Marker>
+          </MapContainer>
+        </div>
 
         {auth.currentUser?.uid !== listing.userRef && (
           <Link
