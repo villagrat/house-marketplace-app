@@ -765,6 +765,18 @@ button {
   margin-right: 3rem;
   padding: 0.9rem 0.7rem;
   text-align: center;
+  width: 40%;
+}
+
+@media screen and (max-width: 499px) {
+  .formInputSmall {
+    min-width: 105px;
+  }
+}
+@media screen and (min-width: 500px) {
+  .formInputSmall {
+    max-width: 500px;
+  }
 }
 
 .formInputName {
@@ -783,6 +795,16 @@ button {
   display: flex;
   align-items: center;
 }
+@media screen and (max-width: 499px) {
+  .formPriceDiv {
+    min-width: 388px;
+  }
+}
+@media screen and (min-width: 500px) {
+  .formPriceDiv {
+    max-width: 500px;
+  }
+}
 
 .formPriceText {
   margin-left: -1.5rem;
@@ -797,7 +819,7 @@ button {
 .formInputFile {
   width: 100%;
 }
-.formInputFile::-webkit-file-upload-button {
+.formInputFile::file-selector-button {
   background-color: #00cc66;
   border: none;
   color: #ffffff;
