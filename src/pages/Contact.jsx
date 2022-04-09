@@ -9,6 +9,7 @@ function Contact() {
   const [landlord, setLandlord] = useState(null);
   // Allows us to use the listingName that comes in in the params
   // on the mailto section
+  // eslint-disable-next-line
   const [searchParams, setSearchParams] = useSearchParams();
 
   const params = useParams();

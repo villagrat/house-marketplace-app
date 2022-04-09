@@ -14,6 +14,7 @@ import { toast } from 'react-toastify';
 import Spinner from '../components/Spinner';
 
 function EditListing() {
+  // eslint-disable-next-line
   const [geolocationEnabled, setGeolocationEnabled] = useState(true);
   const [listing, setListing] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -153,6 +154,8 @@ function EditListing() {
               case 'running':
                 console.log('Upload is running');
                 break;
+              default:
+                break;
             }
           },
           (error) => {
@@ -203,7 +206,7 @@ function EditListing() {
       toast.error('You cannot edit that listing...');
       navigate('/');
     }
-  }, []);
+  }, [listing, navigate, auth.currentUser.uid]);
 
   // fetch listing to edit
   useEffect(() => {
