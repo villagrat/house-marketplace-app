@@ -5,6 +5,7 @@ import { db } from '../firebase.config';
 import Spinner from './Spinner';
 import { Navigation, Pagination, Scrollbar, A11y } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
+import { toast } from 'react-toastify';
 
 import 'swiper/css';
 import 'swiper/css/navigation';
@@ -20,21 +21,25 @@ function Slider() {
 
   useEffect(() => {
     const fetchListings = async () => {
-      const listingsRef = collection(db, 'listings');
-      const q = query(listingsRef, orderBy('timestamp', 'desc'), limit(5));
-      const querySnap = await getDocs(q);
+      try {
+        const listingsRef = collection(db, 'listings');
+        const q = query(listingsRef, orderBy('timestamp', 'desc'), limit(5));
+        const querySnap = await getDocs(q);
 
-      let listings = [];
+        let listings = [];
 
-      querySnap.forEach((doc) => {
-        listings.push({
-          id: doc.id,
-          data: doc.data(),
+        querySnap.forEach((doc) => {
+          listings.push({
+            id: doc.id,
+            data: doc.data(),
+          });
         });
-      });
 
-      setListings(listings);
-      setLoading(false);
+        setListings(listings);
+        setLoading(false);
+      } catch (error) {
+        toast.error('There was an error while fetching the listings...');
+      }
     };
 
     fetchListings();
@@ -44,16 +49,19 @@ function Slider() {
     return <Spinner />;
   }
 
+  if (listings.length === 0) {
+    return <></>;
+  }
+
   return (
     listings && (
-      <div className='swiper-container'>
+      <>
         <p className='exploreHeading'>Recommended</p>
         <Swiper
           modules={[Navigation, Pagination, Scrollbar, A11y]}
           slidesPerView={1}
           pagination={{ clickable: true }}
           navigation
-          className='exploreSwiper'
           style={{ height: '32vh', cursor: 'pointer' }}
         >
           {listings.map(({ data, id }) => {
@@ -83,7 +91,7 @@ function Slider() {
             );
           })}
         </Swiper>
-      </div>
+      </>
     )
   );
 }

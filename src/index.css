@@ -316,11 +316,6 @@ button {
   margin-top: 3rem;
 }
 
-.swiper-container {
-  min-height: 240px;
-  height: 23vw;
-}
-
 .swiper-pagination-bullet-active {
   background-color: #ffffff !important;
 }
@@ -632,6 +627,10 @@ button {
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+.profileListingsList {
+  padding: 0 0.3rem;
 }
 
 .logOut {

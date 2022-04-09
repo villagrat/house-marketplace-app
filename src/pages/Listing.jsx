@@ -8,6 +8,7 @@ import Spinner from '../components/Spinner';
 import shareIcon from '../assets/svg/shareIcon.svg';
 import { Navigation, Pagination, Scrollbar, A11y } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
+import { toast } from 'react-toastify';
 
 import 'swiper/css';
 import 'swiper/css/navigation';
@@ -31,10 +32,12 @@ function Listing() {
       const docRef = doc(db, 'listings', params.listingId);
       const docSnap = await getDoc(docRef);
 
-      // todo: handle case of bad route, so it doesnt load forever
       if (docSnap.exists()) {
         setListing(docSnap.data());
         setLoading(false);
+      } else {
+        toast.error('Listing does not exist');
+        navigate('/');
       }
     };
 
