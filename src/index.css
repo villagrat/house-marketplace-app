@@ -769,12 +769,15 @@ button {
   outline: none;
   font-family: 'Montserrat', sans-serif;
 }
+.formRooms {
+  width: 6rem;
+}
+
 .formInputSmall,
 .formInputFile {
   margin-right: 3rem;
   padding: 0.9rem 0.7rem;
   text-align: center;
-  width: 40%;
 }
 
 @media screen and (max-width: 499px) {

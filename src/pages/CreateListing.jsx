@@ -265,7 +265,7 @@ function CreateListing() {
             <div>
               <label className='formLabel'>Bedrooms</label>
               <input
-                className='formInputSmall'
+                className='formInputSmall formRooms'
                 type='number'
                 id='bedrooms'
                 value={bedrooms}
@@ -278,7 +278,7 @@ function CreateListing() {
             <div>
               <label className='formLabel'>Bathrooms</label>
               <input
-                className='formInputSmall'
+                className='formInputSmall formRooms'
                 type='number'
                 id='bathrooms'
                 value={bathrooms}
